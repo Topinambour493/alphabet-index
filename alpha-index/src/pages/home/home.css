@@ -1,0 +1,47 @@
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+}
+
+.container-letters {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-letter {
+    border-left: solid black 4px;
+    border-bottom: solid black 4px;
+    width: 30px;
+    text-align: center;
+}
+
+/*.container-letters > :first-child{*/
+/*    border-left: solid black 4px;*/
+/*}*/
+
+.container-letters > :last-child{
+    border-right: solid black 4px;
+}
+
+main > :first-child > * {
+    border-top: solid black 4px;
+}
+
+
+

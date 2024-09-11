@@ -1,0 +1,1 @@
+export type typeQuestionsSelect = "index vers lettre" | "lettre vers index" | "tout";
