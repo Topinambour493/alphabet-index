@@ -43,5 +43,17 @@ main > :first-child > * {
     border-top: solid black 4px;
 }
 
+#awnserInput{
+    border: 6px grey solid;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+}
 
+#awnserInput.bad{
+    border: 6px red solid;
+}
 
+#awnserInput.good{
+    border: 6px green solid;
+}

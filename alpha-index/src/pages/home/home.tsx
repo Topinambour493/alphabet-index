@@ -1,13 +1,16 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import "./home.css"
 import {typeQuestionsSelect} from "../../types";
+import Scoring from "../../components/scoring/scoring";
+import {alphabet, indexToLetter, isGoodAwnser, letterToIndex, loadNewQuestion} from "../../utils/utils";
+import {useNavigate} from "react-router-dom";
 
 
 
 export default function Home() {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   const typeQuestionsSelect: typeQuestionsSelect[] = ["index vers lettre", "lettre vers index", "tout"];
 
+  const navigate = useNavigate()
   let [lettersUppercase, setLettersUppercase] = useState<boolean>(false)
   let [hideAlphabet, setHideAlphabet ] = useState<boolean>(true)
   let [lettersByRow, setLettersByRow] = useState<number>(10)
@@ -16,46 +19,19 @@ export default function Home() {
   let [awnserInput, setAwnserInput] = useState<string>("")
   let [typeQuestions, setTypeQestions] = useState<typeQuestionsSelect>("tout")
 
-  function loadNewQuestion(){
-    let newQuestion;
-    let typeQuestion;
-    if (typeQuestions === "tout"){
-      // je choisis au hasard le type de la prochaine question
-      typeQuestion = ["lettre vers index", "index vers lettre"][ Math.floor(Math.random()*2)]
-    } else {
-      typeQuestion = typeQuestions
-    }
-    if (typeQuestion === "index vers lettre"){
-      newQuestion = Math.floor(1 + Math.random()*26)
-      setQuestion(newQuestion.toString())
-      setAwnser(indexToLetter(newQuestion))
-    } else if (typeQuestion === "lettre vers index") {
-      newQuestion = alphabet[Math.floor(1 + Math.random()*26)]
-      setQuestion(newQuestion)
-      setAwnser(letterToIndex(newQuestion).toString())
-    }
-    setAwnserInput("")
-  }
 
-  function verifyAwnser(e: FormEvent<HTMLFormElement>){
+  function verifyAwnserAndLoadNewQuestion(e: FormEvent<HTMLFormElement>){
     e.preventDefault()
-    if (awnser === awnserInput){
-      console.log("yes")
+    let awnserDiv =  document.getElementById("awnserInput")!
+    if (isGoodAwnser(awnser, awnserInput)){
+      awnserDiv.className = "good"
     } else {
-      console.log("nope")
+      awnserDiv.className = "bad"
     }
-    loadNewQuestion()
+    loadNewQuestion(typeQuestions, lettersUppercase, setQuestion, setAwnser, setAwnserInput)
   }
 
-  function letterToIndex(letter: string) {
-    // letter between a and z
-    return alphabet.indexOf(letter) + 1
-  }
 
-  function indexToLetter(index: number) {
-    // index between 1 and 26
-    return alphabet[index - 1]
-  }
 
   function createContainerLetters() {
     let containerLetters = document.createElement("div")
@@ -111,7 +87,7 @@ export default function Home() {
   }, [lettersUppercase, lettersByRow])
 
   useEffect(()=>{
-    loadNewQuestion()
+    loadNewQuestion(typeQuestions, lettersUppercase, setQuestion, setAwnser, setAwnserInput)
   },[])
 
   return <>
@@ -127,7 +103,7 @@ export default function Home() {
     <select
       id="type-quastions-select"
       value={typeQuestions}
-      onChange={(e: ChangeEvent<HTMLSelectElement>)=> setTypeQestions(e.target.value as typeQuestionsSelect)}
+      onChange={(e: ChangeEvent<HTMLSelectElement>)=> setTypeQestions(e.target.value.toLowerCase() as typeQuestionsSelect)}
     >
       {typeQuestionsSelect.map((type, index) => (
         <option key={index} value={type}>
@@ -138,11 +114,12 @@ export default function Home() {
     <main id="main"></main>
     <div id={"testZone"}>
       <div id={"question"}>{question}</div>
-      <form onSubmit={(e: FormEvent<HTMLFormElement>) => verifyAwnser(e)}>
-        <input type={"text"} onChange={(e: ChangeEvent<HTMLInputElement>) => setAwnserInput(e.target.value)}
-               value={awnserInput} id={"awnser"}></input>
+      <form onSubmit={(e: FormEvent<HTMLFormElement>) => verifyAwnserAndLoadNewQuestion(e)}>
+        <input type={"text"}  onChange={(e: ChangeEvent<HTMLInputElement>) => setAwnserInput(e.target.value) }
+               value={awnserInput} id={"awnserInput"}></input>
         <button type={"submit"}>valider</button>
       </form>
+      <button onClick={()=>navigate("/test")}>Passer à l'évalation (100 questions)</button>
     </div>
   </>
 }
