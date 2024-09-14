@@ -12,7 +12,7 @@ export default function Test() {
 
   function verifyAwnserAndLoadNewQuestion(e: FormEvent<HTMLFormElement>){
     e.preventDefault()
-    if (isGoodAwnser){
+    if (isGoodAwnser(awnser, awnserInput)){
       setScore(score+1)
     }
     if (actualQuestion === 100){
