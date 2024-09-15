@@ -12,7 +12,7 @@ export function indexToLetter(index: number) {
   return alphabet[index - 1]
 }
 
-export function loadNewQuestion(typeQuestions: typeQuestionsSelect, lettersUppercase: boolean, setQuestion: (question: string) => void , setAwnser :(awnser: string) => void , setAwnserInput:  (awnserInput: string) => void ){
+export function loadNewQuestion(typeQuestions: typeQuestionsSelect, setQuestion: (question: string) => void , setAwnser :(awnser: string) => void , setAwnserInput:  (awnserInput: string) => void ){
   let newQuestion;
   let typeQuestion;
   if (typeQuestions === "tout"){
@@ -23,10 +23,7 @@ export function loadNewQuestion(typeQuestions: typeQuestionsSelect, lettersUpper
   }
   if (typeQuestion === "index vers lettre"){
     newQuestion = Math.floor(1 + Math.random()*26)
-    if (lettersUppercase)
-      setQuestion(newQuestion.toString().toUpperCase())
-    else
-      setQuestion(newQuestion.toString())
+    setQuestion(newQuestion.toString())
     setAwnser(indexToLetter(newQuestion))
   } else if (typeQuestion === "lettre vers index") {
     newQuestion = alphabet[Math.floor(1 + Math.random()*26)]

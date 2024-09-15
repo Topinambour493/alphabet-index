@@ -1,8 +1,9 @@
 import "./scoring.css"
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
+
 export default function Scoring() {
-  const  navigate = useNavigate();
+  const navigate = useNavigate();
   const locate = useLocation();
 
   function getRedToGreen(percent: number) {
@@ -32,7 +33,5 @@ export default function Scoring() {
 
   return <>
     <div id={"score"}></div>
-    <button onClick={()=>navigate('/test')}>Rejouer</button>
-    <button onClick={()=>navigate('/')}>Repartir à l'entrainement</button>
   </>
 }
