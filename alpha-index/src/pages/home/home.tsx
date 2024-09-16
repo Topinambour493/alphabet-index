@@ -43,7 +43,6 @@ export default function Home() {
     return letter
   }
 
-
   function createAlphabetIndexDynamic() {
     let arrayAlphabet = document.getElementById("arrayAlphabet")!
     let containerLetters = createContainerLetters()
@@ -121,8 +120,8 @@ export default function Home() {
       <div className={"center-column"}>
         <div id={"question"}>{question}</div>
         <form id={"awnser"} onSubmit={(e: FormEvent<HTMLFormElement>) => verifyAwnserAndLoadNewQuestion(e)}>
-          <input type={"text"} onChange={(e: ChangeEvent<HTMLInputElement>) => setAwnserInput(e.target.value)}
-                 value={awnserInput} id={"awnserInput"} required></input>
+          <input type={"text"} onChange={(e: ChangeEvent<HTMLInputElement>) => setAwnserInput(e.target.value.toLowerCase())}
+                 value={awnserInput} id={"awnserInput"} autoCapitalize="none" required></input>
           <button type={"submit"}>valider</button>
         </form>
       </div>

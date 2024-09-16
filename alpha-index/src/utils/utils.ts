@@ -12,6 +12,7 @@ export function indexToLetter(index: number) {
   return alphabet[index - 1]
 }
 
+
 export function loadNewQuestion(typeQuestions: typeQuestionsSelect, setQuestion: (question: string) => void , setAwnser :(awnser: string) => void , setAwnserInput:  (awnserInput: string) => void ){
   let newQuestion;
   let typeQuestion;
